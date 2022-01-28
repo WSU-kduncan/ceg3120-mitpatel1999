@@ -3,13 +3,21 @@ import os
 import discord
 import random
 from dotenv import load_dotenv
+from discord.ext import commands
+from discord.ext.commands import bot
+
 
 load_dotenv()
 #print(os.getenv('DISCORD_TOKEN'))
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
+bot = commands.Bot(command_prefix='!')
 client = discord.Client()
+
+@bot.event
+async def on_ready():
+    print('Connected')
 
 @client.event
 async def on_ready():
@@ -22,6 +30,10 @@ async def on_ready():
              f'{guild.name}(id: {guild.id})'
         )
 
+@bot.command(pass_context=True)
+async def test(ctx):
+    await ctx.send('Working!', file=discord.File("\Downloads\cat.png"))
+        
 @client.event
 async def on_message(message):
         if message.author == client.user:
@@ -50,4 +62,4 @@ async def on_message(message):
             await message.channel.send(response)
 
 client.run(TOKEN)
-
+bot.run(TOKEN)
