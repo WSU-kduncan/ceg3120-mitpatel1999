@@ -43,11 +43,17 @@ async def on_message(message):
                 'In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a bad move.',
                 'A common mistake that people make when trying to design something completely foolproof is to underestimate the ingenuity of complete fools.',
         ]
+        
+        
 
         if message.content == 'towel!':
             #response = random.choice(brooklyn_99_quotes)
             response = random.choice(hitchhiker_quotes)
             await message.channel.send(response)
+        
+@client.command()
+async def helloworld(ctx):
+        await ctx.send('Hello World!')
 
 client.run(TOKEN)
 
