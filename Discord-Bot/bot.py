@@ -5,14 +5,8 @@ import discord
 import random
 from discord.ext import commands
 from dotenv import load_dotenv
-<<<<<<< HEAD
 from discord.ext.commands import bot
 from discord import File
-=======
-from discord.ext import commands
-from discord.ext.commands import bot
->>>>>>> cdb7493815c3783473e2f29426533154e7a59fd1
-
 
 load_dotenv()
 #print(os.getenv('DISCORD_TOKEN'))
@@ -21,9 +15,6 @@ GUILD = os.getenv('DISCORD_GUILD')
 
 bot = commands.Bot(command_prefix='!')
 client = discord.Client()
-@bot.event
-async def on_ready():
-    print('Connected')
 
 @bot.event
 async def on_ready():
@@ -42,13 +33,8 @@ async def on_ready():
 
 @bot.command(pass_context=True)
 async def test(ctx):
-<<<<<<< HEAD
     await ctx.send('Working!', file=discord.File("cat.png"))
-
-=======
-    await ctx.send('Working!', file=discord.File("\Downloads\cat.png"))
-        
->>>>>>> cdb7493815c3783473e2f29426533154e7a59fd1
+    
 @client.event
 async def on_message(message):
         if message.author == client.user:
@@ -82,4 +68,4 @@ async def on_message(message):
 
 bot.run(TOKEN)
 client.run(TOKEN)
-bot.run(TOKEN)
+
