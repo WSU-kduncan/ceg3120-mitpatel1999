@@ -1,15 +1,24 @@
 import os
 
+
 import discord
 import random
+from discord.ext import commands
 from dotenv import load_dotenv
+from discord.ext.commands import bot
+from discord import File
+
 
 load_dotenv()
 #print(os.getenv('DISCORD_TOKEN'))
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
+bot = commands.Bot(command_prefix='!')
 client = discord.Client()
+@bot.event
+async def on_ready():
+    print('Connected')
 
 @client.event
 async def on_ready():
@@ -21,6 +30,10 @@ async def on_ready():
              f'{client.user} is connected to the following guild:\n'
              f'{guild.name}(id: {guild.id})'
         )
+
+@bot.command(pass_context=True)
+async def test(ctx):
+    await ctx.send('Working!', file=discord.File("cat.png"))
 
 @client.event
 async def on_message(message):
@@ -49,5 +62,10 @@ async def on_message(message):
             response = random.choice(hitchhiker_quotes)
             await message.channel.send(response)
 
+
+
+
+
+bot.run(TOKEN)
 client.run(TOKEN)
 
