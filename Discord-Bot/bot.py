@@ -35,12 +35,7 @@ async def on_ready():
 @bot.command(pass_context=True)
 async def test(ctx):
     await ctx.send('Working!', file=discord.File("cat.png"))
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> cc3e0adae58a0b981a62d096446ecd161856a5dd
-@client.event
 async def on_message(message):
         if message.author == client.user:
             return
