@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: >-
+Description: ' Mit Patel CF Template to create a VPC, allow SSH access from trusted networks, and create a single instance with an Elastic IP address '
   Testing area for AWS: This template builds a linux VM for CEG 2350 @ WSU.
 Parameters:
   KeyName:
@@ -27,8 +27,8 @@ Resources:
   VPC:
     Type: 'AWS::EC2::VPC'
     Properties:
-      CidrBlock: 10.0.0.0/16
-      Tags:
+            CidrBlock: 10.0.0.0/24
+      Tags: 'Patel-CF-VPC'
         - Key: Application
           Value: !Ref 'AWS::StackId'
         - Key: Name
@@ -37,14 +37,14 @@ Resources:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref VPC
-      CidrBlock: 10.0.0.0/24
-      Tags:
+      CidrBlock: 10.0.0.0/28
+      Tags: 'Patel-CF-Subnet'
         - Key: Application
           Value: !Ref 'AWS::StackId'
   InternetGateway:
     Type: 'AWS::EC2::InternetGateway'
-    Properties:
-      Tags:
+    Properties:0
+      Tags: 'Patel-CF-InternetGateway'
         - Key: Application
           Value: !Ref 'AWS::StackId'
   AttachGateway:
@@ -56,7 +56,7 @@ Resources:
     Type: 'AWS::EC2::RouteTable'
     Properties:
       VpcId: !Ref VPC
-      Tags:
+      Tags: 'Patel-CF-RouteTable'
         - Key: Application
           Value: !Ref 'AWS::StackId'
   Route:
@@ -98,7 +98,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: '1'
           ToPort: '65535'
-          CidrIp: 0.0.0.0/0
+          CidrIp: 192.168.50.106
   PublicUbuntuInstance:
     Type: 'AWS::EC2::Instance'
     DependsOn: AttachGateway
@@ -112,7 +112,7 @@ Resources:
           - Arch
       InstanceType: t2.micro
       KeyName: !Ref KeyName
-      Tags:
+      Tags: 'Patel-CF-instance'
         - Key: Application
           Value: !Ref 'AWS::StackId'
         - Key: Name
@@ -124,7 +124,7 @@ Resources:
           DeviceIndex: '0'
           DeleteOnTermination: 'true'
           SubnetId: !Ref Subnet
-          PrivateIpAddress: 10.0.0.25
+          PrivateIpAddress: 10.0.0.15
       UserData:
         Fn::Base64:
           !Sub |
@@ -132,6 +132,8 @@ Resources:
             apt-get update && \
             apt-get install -y \
               git \
+              python3 \
+              pip3 \
               htop \
               sl && \
             echo "This is from the CF template" > /home/ubuntu/hello.txt && \
