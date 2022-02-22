@@ -1,6 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: ' Mit Patel CF Template to create a VPC, allow SSH access from trusted networks, and create a single instance with an Elastic IP address '
-  Testing area for AWS: This template builds a linux VM for CEG 2350 @ WSU.
 Parameters:
   KeyName:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
@@ -27,7 +26,7 @@ Resources:
   VPC:
     Type: 'AWS::EC2::VPC'
     Properties:
-            CidrBlock: 10.0.0.0/24
+      CidrBlock: 10.0.0.0/24
       Tags: 'Patel-CF-VPC'
         - Key: Application
           Value: !Ref 'AWS::StackId'
