@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  'Mit Patel CF Template to create a VPC, allow SSH access from trusted networks, and create a single instance with an Elastic IP address'
+  Mit Patel CF Template to create a VPC, allow SSH access from trusted networks, and create a single instance with an Elastic IP address
 Parameters:
   KeyName:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
@@ -28,25 +28,29 @@ Resources:
     Type: 'AWS::EC2::VPC'
     Properties:
       CidrBlock: 10.0.0.0/24
-      Tags: 'Patel-CF-VPC'
+      Tags: 
         - Key: Application
           Value: !Ref 'AWS::StackId'
         - Key: Name
-          Value: CEG2350 VPC
+          Value: Patel-CF-VPC
   Subnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref VPC
       CidrBlock: 10.0.0.0/28
-      Tags: 'Patel-CF-Subnet'
+      Tags: 
         - Key: Application
           Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Patel-CF-Subnet
   InternetGateway:
     Type: 'AWS::EC2::InternetGateway'
-    Properties:0
-      Tags: 'Patel-CF-InternetGateway'
+    Properties:
+      Tags: 
         - Key: Application
           Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Patel-CF-InternetGateway
   AttachGateway:
     Type: 'AWS::EC2::VPCGatewayAttachment'
     Properties:
@@ -56,9 +60,11 @@ Resources:
     Type: 'AWS::EC2::RouteTable'
     Properties:
       VpcId: !Ref VPC
-      Tags: 'Patel-CF-RouteTable'
+      Tags: 
         - Key: Application
           Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Patel-CF-RouteTable
   Route:
     Type: 'AWS::EC2::Route'
     DependsOn: AttachGateway
@@ -86,19 +92,15 @@ Resources:
         - IpProtocol: tcp
           FromPort: '22'
           ToPort: '22'
-          CidrIp: !Ref SSHLocation
+          CidrIp: 10.0.0.0/24
         - IpProtocol: tcp
           FromPort: '22'
           ToPort: '22'
           CidrIp: 130.108.0.0/16  # WSU CIDR
-        - IpProtocol: -1
-          FromPort: '-1'
-          ToPort: '-1'
-          CidrIp: 10.0.0.0/24
         - IpProtocol: tcp
-          FromPort: '1'
-          ToPort: '65535'
-          CidrIp: 192.168.50.106
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 76.177.71.96/32
   PublicUbuntuInstance:
     Type: 'AWS::EC2::Instance'
     DependsOn: AttachGateway
@@ -116,7 +118,7 @@ Resources:
         - Key: Application
           Value: !Ref 'AWS::StackId'
         - Key: Name
-          Value: CEG2350 Ubuntu
+          Value: Patel-CF-Instance
       NetworkInterfaces:
         - GroupSet:
             - !Ref Lab1SecurityGroup
@@ -136,5 +138,5 @@ Resources:
               pip3 \
               htop \
               sl && \
-            echo "This is from the CF template" > /home/ubuntu/hello.txt && \
+            hostname1 set-hostname Patel-ubuntu && \
             reboot
