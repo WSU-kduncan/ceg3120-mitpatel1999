@@ -138,5 +138,5 @@ Resources:
               pip3 \
               htop \
               sl && \
-            hostname1 set-hostname Patel-ubuntu && \
+            echo "This is from the CF template" > /home/ubuntu/hello.txt && \
             reboot
