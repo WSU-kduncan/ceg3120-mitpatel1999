@@ -148,7 +148,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: '80'
           ToPort: '80'
-          CidrIp: ::/0
+          CidrIp: 10.0.0.0/24
           # TODO Need more rules for port 80 access
       Tags: 
         - Key: Name
@@ -184,9 +184,8 @@ Resources:
           !Sub |
             #!/bin/bash -xe
             apt-get update && \
-             haproxy \
             # TODO need to install haproxy
-            apt-get install -y git python3 python3-pip && \
+            apt-get install -y git python3 python3-pip haproxy && \
             hostnamectl set-hostname proxy && \
             reboot
   WebServ1Instance:
@@ -220,9 +219,8 @@ Resources:
           !Sub |
             #!/bin/bash -xe
             apt-get update && \
-              apacche2 \
             # TODO need to install apache or nginx
-            apt-get install -y git && \
+            apt-get install -y git apache2 && \
             # TODO give it a hostname - 
             hostnamectl set-hostname Patel-server1 && \
             reboot
@@ -259,9 +257,8 @@ Resources:
           !Sub |
             #!/bin/bash -xe
             apt-get update && \
-              apache2 \
             # TODO need to install apache or nginx
-        apt-get install -y git && \
+        apt-get install -y git apache2 && \
             # TODO give it a hostname -
             hostnamectl set-hostname Patel-server2 && \
             reboot
