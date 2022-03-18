@@ -214,7 +214,7 @@ Resources:
           DeviceIndex: '0'
           DeleteOnTermination: 'true'
           SubnetId: !Ref PrivateSubnet
-          PrivateIpAddress: 132.90.104.4/24 # TODO make sure unique to the instance
+          PrivateIpAddress: 172.31.88.100 # TODO make sure unique to the instance
       UserData:
         Fn::Base64:
           !Sub |
@@ -253,7 +253,7 @@ Resources:
           DeviceIndex: '0'
           DeleteOnTermination: 'true'
           SubnetId: !Ref PrivateSubnet
-          PrivateIpAddress: 254.192.141.2/24 # TODO make sure unique to the instance
+          PrivateIpAddress: 172.31.80.177 # TODO make sure unique to the instance
       UserData:
         Fn::Base64:
           !Sub |
@@ -261,7 +261,7 @@ Resources:
             apt-get update && \
               apache2 \
             # TODO need to install apache or nginx
-            apt-get install -y git && \
+        apt-get install -y git && \
             # TODO give it a hostname -
             hostnamectl set-hostname Patel-server2 && \
             reboot
