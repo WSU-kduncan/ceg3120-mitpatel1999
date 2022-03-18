@@ -6,7 +6,7 @@ Part 2
  - Modified: /etc/haproxy/haproxy.cfg 
  - Config: 
 global
-    # global settings here
+   
     maxconn 50000
     log /dev/log local0
     user haproxy
