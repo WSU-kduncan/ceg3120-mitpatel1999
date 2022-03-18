@@ -6,7 +6,7 @@ Part 2
  - Modified: /etc/haproxy/haproxy.cfg 
  - Config: 
 global
-   
+
     maxconn 50000
     log /dev/log local0
     user haproxy
@@ -14,7 +14,7 @@ global
     stats socket /run/haproxy/admin.sock user haproxy group haproxy mode 660 level admin
 
 defaults
-    # defaults here
+     
     timeout connect 10s
     timeout client 30s
     timeout server 30s
@@ -30,7 +30,7 @@ frontend
 
 
 backend
-    # servers that fulfill the requests
+  
     balence roundrobin
     server WedServ1 172.31.88.100:80
     server WedServ2 172.31.80.177:80
